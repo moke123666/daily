@@ -129,6 +129,7 @@ public class PictureFragment extends BaseFragment implements IPictureCallback {
         setUpState(State.SUCCESS);
         mAdapter.loadMoreData(mData);
         mRefreshLayout.finishLoadMore(true);
+        String a;
     }
 
     @Override
