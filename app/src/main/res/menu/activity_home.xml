@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/diary"
+        android:icon="@mipmap/book"
+        android:title="@string/book_name" />
+    <item
+        android:id="@+id/smile"
+        android:icon="@mipmap/face"
+        android:title="@string/face_name" />
+    <item
+        android:id="@+id/picture"
+        android:icon="@mipmap/picture"
+        android:title="@string/picture_name" />
+</menu>
