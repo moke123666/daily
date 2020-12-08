@@ -176,10 +176,10 @@ public class PicturePresenterImpl implements IPicturePresenter {
         public void run() {
             try {
                 OkHttpClient client = new OkHttpClient().newBuilder()
-                        .callTimeout(1000, TimeUnit.MILLISECONDS)
-                        .connectTimeout(1000, TimeUnit.MILLISECONDS)
-                        .readTimeout(1000, TimeUnit.MILLISECONDS)
-                        .writeTimeout(1000, TimeUnit.MILLISECONDS)
+                        .callTimeout(2000, TimeUnit.MILLISECONDS)
+                        .connectTimeout(2000, TimeUnit.MILLISECONDS)
+                        .readTimeout(2000, TimeUnit.MILLISECONDS)
+                        .writeTimeout(2000, TimeUnit.MILLISECONDS)
                         .build();
                 for (int i = 0; i < 8; ++i) {
                     Request request = new Request.Builder().url(url).header("Proxy-Connection", "keep-alive")

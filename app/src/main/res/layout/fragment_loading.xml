@@ -2,11 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+    
         <ImageView
             android:id="@+id/loading_image"
             android:layout_width="50dp"
@@ -22,5 +18,4 @@
             android:layout_centerHorizontal="true"
             android:text="加载中，请稍后..."
             android:textColor="#000000" />
-    </RelativeLayout>
 </RelativeLayout>
