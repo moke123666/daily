@@ -1,22 +1,13 @@
 package club.mokeblog.diary.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
-import java.util.ArrayList;
-import java.util.List;
+import androidx.viewpager2.widget.ViewPager2;
 
 import club.mokeblog.diary.R;
 import club.mokeblog.diary.base.BaseActivity;
-import club.mokeblog.diary.ui.adapter.PictureContentAdapter;
 import club.mokeblog.diary.ui.adapter.PicturePagerViewAdapter;
 
 public class PicturePageActivity extends BaseActivity {
@@ -58,21 +49,18 @@ public class PicturePageActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        List<View> list = new ArrayList<>();
-        LayoutInflater inflater = LayoutInflater.from(this);
-        
-        for (Bitmap li : PictureContentAdapter.mData) {
-            View view = inflater.inflate(R.layout.picture_pager_view, null, false);
-            ((ImageView) (view.findViewById(R.id.pager_photoview))).setImageBitmap(li);
-            list.add(view);
-        }
-
         Intent intent = getIntent();
         mPosition = intent.getIntExtra("position", 0);
-        PagerAdapter pagerAdapter = new PicturePagerViewAdapter(list);
-        ViewPager viewPager = findViewById(R.id.picture_view_pager);
+        PicturePagerViewAdapter pagerAdapter = new PicturePagerViewAdapter();
+        ViewPager2 viewPager = findViewById(R.id.picture_view_pager);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(mPosition);
+        viewPager.setCurrentItem(mPosition,false);
+//        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//            @Override
+//            public void onPageSelected(int position) {
+//                
+//            }
+//        });
     }
 
     @Override

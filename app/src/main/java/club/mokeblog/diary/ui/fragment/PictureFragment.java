@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,7 +58,6 @@ public class PictureFragment extends BaseFragment implements IPictureCallback {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mAdapter = new PictureContentAdapter();
-        mAdapter.setActivity((AppCompatActivity) getActivity());
         mRecyclerView.setAdapter(mAdapter);
         mRefreshLayout.autoRefresh();
     }

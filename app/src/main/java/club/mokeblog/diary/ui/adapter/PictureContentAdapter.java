@@ -29,7 +29,6 @@ public class PictureContentAdapter extends RecyclerView.Adapter<PictureContentAd
     private final String TAG = "PictureContentAdapter";
     public static List<Bitmap> mData = new ArrayList<>();
     private View mView;
-    private AppCompatActivity mActivity;
 
 
     @NonNull
@@ -42,7 +41,6 @@ public class PictureContentAdapter extends RecyclerView.Adapter<PictureContentAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.mImageView.setImageBitmap(mData.get(position));
-        //Glide.with(mView).load(mData.get(position)).error(R.mipmap.picture_error).placeholder(R.mipmap.picture_loading).into(holder.mImageView);
         initListener(holder, position);
     }
 
@@ -50,24 +48,24 @@ public class PictureContentAdapter extends RecyclerView.Adapter<PictureContentAd
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mActivity, PicturePageActivity.class);
+                Intent intent = new Intent(view.getContext(), PicturePageActivity.class);
                 intent.putExtra("position", position);
-                mActivity.startActivity(intent);
+                view.getContext().startActivity(intent);
             }
         });
 
         holder.mImageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                MessageDialog.show(mActivity, "提示", "是否保存该图片?", "确定", "取消")
+                MessageDialog.show((AppCompatActivity) view.getContext(), "提示", "是否保存该图片?", "确定", "取消")
                         .setOnOkButtonClickListener(new OnDialogButtonClickListener() {
                             @Override
                             public boolean onClick(BaseDialog baseDialog, View v) {
-                                boolean isSuccess = ImgUtils.saveImageToGallery(mActivity, mData.get(position));
+                                boolean isSuccess = ImgUtils.saveImageToGallery(view.getContext(), mData.get(position));
                                 if (isSuccess) {
-                                    Toast.makeText(mActivity, "成功保存图片", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(view.getContext(), "成功保存图片", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(mActivity, "保存图片失败", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(view.getContext(), "保存图片失败", Toast.LENGTH_SHORT).show();
                                 }
                                 return false;
                             }
@@ -77,9 +75,6 @@ public class PictureContentAdapter extends RecyclerView.Adapter<PictureContentAd
         });
     }
 
-    public void setActivity(AppCompatActivity activity) {
-        this.mActivity = activity;
-    }
 
 
     @Override
