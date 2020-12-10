@@ -94,13 +94,14 @@ public class MainActivity extends BaseActivity {
     }
 
     //图片需要的权限
-    private static final String[] PHOTO_PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static final String[] PHOTO_PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private static final int PHOTO_PERMISSIONS_CODE = 1;
+
     //申请权限
     private void requestPermission() {
         // 当API大于 23 时，才动态申请权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ActivityCompat.requestPermissions(this,PHOTO_PERMISSIONS,PHOTO_PERMISSIONS_CODE);
+            ActivityCompat.requestPermissions(this, PHOTO_PERMISSIONS, PHOTO_PERMISSIONS_CODE);
         }
     }
 
@@ -119,9 +120,8 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
-    
-    private void showDialog()
-    {
+
+    private void showDialog() {
         MessageDialog.show(this, "提示", "保存图片需要存储权限，是否去设置？", "确定", "取消")
                 .setOnOkButtonClickListener(new OnDialogButtonClickListener() {
                     @Override
@@ -133,7 +133,7 @@ public class MainActivity extends BaseActivity {
     }
 
     // 跳转到当前应用的设置界面
-    private void goToAppSetting(){
+    private void goToAppSetting() {
         Intent intent = new Intent();
         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         Uri uri = Uri.fromParts("package", this.getPackageName(), null);
@@ -142,8 +142,9 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void initPresenter() 
-    {}
+    protected void initPresenter() {
+    }
+
 
     @Override
     protected void initEven() {

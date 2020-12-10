@@ -83,13 +83,15 @@ public class PictureContentAdapter extends RecyclerView.Adapter<PictureContentAd
     }
 
     public void loadMoreData(List<Bitmap> list) {
-        mData.addAll(list);
+        List<Bitmap> list1 = new ArrayList<>(list);
+        mData.addAll(list1);
         notifyDataSetChanged();
     }
 
     public void refreshData(List<Bitmap> list) {
         mData.clear();
-        mData.addAll(list);
+        List<Bitmap> list1 = new ArrayList<>(list);
+        mData.addAll(list1);
         notifyDataSetChanged();
     }
 
