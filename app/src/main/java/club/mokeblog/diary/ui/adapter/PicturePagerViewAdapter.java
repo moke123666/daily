@@ -53,6 +53,7 @@ public class PicturePagerViewAdapter extends RecyclerView.Adapter<PicturePagerVi
             }
         });
     }
+
     
     @Override
     public int getItemCount() {

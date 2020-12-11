@@ -1,5 +1,9 @@
 package club.mokeblog.diary.ui.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,13 +39,26 @@ public class PictureFragment extends BaseFragment implements IPictureCallback {
 
     @BindView(R.id.picture_refreshLayout)
     public SmartRefreshLayout mRefreshLayout;
-    
+
     @BindView(R.id.error_retry)
     public Button mErrorRetryView;
 
     private final String TAG = "PictureFragment";
     private PictureContentAdapter mAdapter;
     private PicturePresenterImpl mPicturePresenter;
+    private LocalBroadcastManager mLocalBroadcastManager;
+    private Receiver mReceiver;
+    private IntentFilter mIntentFilter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+        mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction("club.mokeblog.diary.pagechange");
+        mReceiver = new Receiver();
+        mLocalBroadcastManager.registerReceiver(mReceiver, mIntentFilter);
+    }
 
     @Nullable
     @Override
@@ -70,7 +88,7 @@ public class PictureFragment extends BaseFragment implements IPictureCallback {
                 mPicturePresenter.refreshData();
             }
         });
-        
+
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -90,7 +108,6 @@ public class PictureFragment extends BaseFragment implements IPictureCallback {
     @Override
     protected void initPresenter() {
         mPicturePresenter = PresenterManager.getOutInstance().getPicturePresenter();
-        mPicturePresenter.setContext(getContext());
         mPicturePresenter.registerViewCallback(this);
     }
 
@@ -139,4 +156,23 @@ public class PictureFragment extends BaseFragment implements IPictureCallback {
     public void onErrorLoadMore() {
         mRefreshLayout.finishLoadMore(false);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPicturePresenter.unRegisterViewCallback(this);
+        mLocalBroadcastManager.unregisterReceiver(mReceiver);
+    }
+
+    private class Receiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int position = intent.getIntExtra("position", 0);
+            if (position == mAdapter.getItemCount() - 5) {
+                PictureFragment.this.mPicturePresenter.loadMoreData();
+            }
+            mRecyclerView.scrollToPosition(position);
+        }
+    }
+
 }

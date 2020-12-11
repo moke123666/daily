@@ -4,16 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import club.mokeblog.diary.R;
 import club.mokeblog.diary.base.BaseActivity;
+import club.mokeblog.diary.ui.adapter.PictureContentAdapter;
 import club.mokeblog.diary.ui.adapter.PicturePagerViewAdapter;
 
 public class PicturePageActivity extends BaseActivity {
-    
-    private int mPosition;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,19 +49,23 @@ public class PicturePageActivity extends BaseActivity {
     @Override
     protected void initView() {
         Intent intent = getIntent();
-        mPosition = intent.getIntExtra("position", 0);
+        int position = intent.getIntExtra("position", 0);
         PicturePagerViewAdapter pagerAdapter = new PicturePagerViewAdapter();
         ViewPager2 viewPager = findViewById(R.id.picture_view_pager);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(mPosition,false);
-//        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//            @Override
-//            public void onPageSelected(int position) {
-//                
-//            }
-//        });
+        viewPager.setCurrentItem(position, false);
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                pagerAdapter.notifyItemInserted(PictureContentAdapter.mData.size());
+                Intent intent1 = new Intent("club.mokeblog.diary.pagechange");
+                intent1.putExtra("position", viewPager.getCurrentItem());
+                LocalBroadcastManager.getInstance(PicturePageActivity.this).sendBroadcast(intent1);
+            }
+        });
     }
-
+    
+    
     @Override
     protected int getLayoutReId() {
         return R.layout.activity_picture_page;

@@ -28,14 +28,13 @@ import club.mokeblog.diary.utils.ImgUtils;
 public class PictureContentAdapter extends RecyclerView.Adapter<PictureContentAdapter.ViewHolder> {
     private final String TAG = "PictureContentAdapter";
     public static List<Bitmap> mData = new ArrayList<>();
-    private View mView;
 
 
     @NonNull
     @Override
     public PictureContentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.picture_item, parent, false);
-        return new PictureContentAdapter.ViewHolder(mView);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.picture_item, parent, false);
+        return new PictureContentAdapter.ViewHolder(view);
     }
 
     @Override
@@ -76,24 +75,24 @@ public class PictureContentAdapter extends RecyclerView.Adapter<PictureContentAd
     }
 
 
-
     @Override
     public int getItemCount() {
         return mData.size();
     }
 
     public void loadMoreData(List<Bitmap> list) {
-        List<Bitmap> list1 = new ArrayList<>(list);
-        mData.addAll(list1);
+        List<Bitmap> listCopy = new ArrayList<>(list);
+        mData.addAll(listCopy);
         notifyDataSetChanged();
     }
 
     public void refreshData(List<Bitmap> list) {
         mData.clear();
-        List<Bitmap> list1 = new ArrayList<>(list);
-        mData.addAll(list1);
+        List<Bitmap> listCopy = new ArrayList<>(list);
+        mData.addAll(listCopy);
         notifyDataSetChanged();
     }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.picture_image)
@@ -104,4 +103,5 @@ public class PictureContentAdapter extends RecyclerView.Adapter<PictureContentAd
             ButterKnife.bind(this, itemView);
         }
     }
+
 }

@@ -2,11 +2,12 @@ package club.mokeblog.diary.view;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.util.List;
 
 import club.mokeblog.diary.base.IBaseCallback;
 
-public interface IPictureCallback extends IBaseCallback {
+public interface IPictureCallback extends IBaseCallback, Serializable {
 
     /**
      *数据刷新
@@ -22,5 +23,4 @@ public interface IPictureCallback extends IBaseCallback {
     void onErrorRefresh();
     
     void onErrorLoadMore();
-
 }
